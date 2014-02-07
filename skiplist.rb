@@ -51,7 +51,23 @@ class SkipList
     end
     v
   end
- 
+
+  def delete(search_key)
+    update = []
+    x = @header
+    @level.downto(0) do |i|
+      while x.forward[i].key < search_key
+        x = x.forward[i]
+      end
+      update[i] = x
+    end
+    x = x.forward[0]
+    0.upto(x.forward.length - 1) do |i|
+      update[i].forward[i] = x.forward[i] if x.forward[i]
+    end
+
+  end
+
   def insert(search_key, new_value = nil)
     new_value = search_key if new_value.nil? 
     update = []

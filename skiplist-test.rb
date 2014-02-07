@@ -5,8 +5,10 @@ list = SkipList.new 10
 list.insert 2 , "duck"
 list.insert 5 , "goose"
 list.insert 7 , "cat"
+puts "delete debug is "
+list.delete 5
 
-puts list.search(5).value
+#puts list.search(5).value
 x = list.header
 while x && x.forward[0] != nil
 	puts "Traversing node: " 
