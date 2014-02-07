@@ -62,10 +62,13 @@ class SkipList
       update[i] = x
     end
     x = x.forward[0]
-    0.upto(x.forward.length - 1) do |i|
-      update[i].forward[i] = x.forward[i] if x.forward[i]
+    if x.key == search_key
+      0.upto(x.forward.length - 1) do |i|
+        update[i].forward[i] = x.forward[i] if x.forward[i]
+      end
+    else
+      puts "Failed to delete non-existent node"
     end
-
   end
 
   def insert(search_key, new_value = nil)
@@ -97,4 +100,15 @@ class SkipList
       end
     end
   end
+
+  def to_a
+    x = @header.forward[0]
+    a = []
+    while x.forward[0]
+      a << x.value
+      x = x.forward[0]
+    end
+    a
+  end
+  alias_method :to_ary, :to_a
 end
