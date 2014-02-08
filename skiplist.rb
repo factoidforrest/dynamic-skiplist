@@ -17,7 +17,7 @@ class SkipList
 
   end
 
-  def initialize(top_level)
+  def initialize(top_level = Float::INFINITY)
    @header = Node.new(1) 
    @level = 0
    @max_level = top_level || 3
@@ -101,14 +101,22 @@ class SkipList
     end
   end
 
-  def to_a
-    x = @header.forward[0]
+  def to_a(l = 0)
+    x = @header.forward[l]
     a = []
-    while x.forward[0]
+    while x.forward[l]
       a << x.value
-      x = x.forward[0]
+      x = x.forward[l]
     end
     a
   end
   alias_method :to_ary, :to_a
+
+  def to_s
+    str = ""
+    @level.downto(0) do |l|
+      str << "Level #{l}: " + to_a(l).join('-') + "\n" 
+    end
+     return str 
+  end  
 end
