@@ -26,6 +26,5 @@ def test(list)
   end
   puts "test complete"
 end
-
+list.clear
 test(list) 
-puts "the 100th element is" + list[100].to_s
