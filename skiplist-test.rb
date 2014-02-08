@@ -1,15 +1,21 @@
 require './skiplist.rb'
+require 'benchmark'
+require 'skiplist'
+list = DSkipList.new
 
+puts "this list insert time: "
+puts Benchmark.measure {1.upto(10000) {|i| list[i]=i }}
 
-list = SkipList.new
+otherList = SkipList.new 100
+puts "other skip list insert time: "
+puts Benchmark.measure {1.upto(10000) {|i| otherList[i] = i}}
 
-1.upto(200) {|i| list.insert(i)}
-50.upto(150) {|i| list.delete(i)}
-list.insert(25, "fish")
+puts "this list search time"
+puts Benchmark.measure {1.upto(10000) {|s| list.search(s)}}
 
-#puts list.to_a
-puts list.search(101)
-puts list.to_s
+puts "other list search time"
+puts Benchmark.measure {1.upto(10000) {|s| otherList[s]}}
+puts "list level " + list.level.to_s
 
 def test(list)
   complete = list.to_a

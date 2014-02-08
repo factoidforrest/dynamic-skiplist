@@ -1,6 +1,6 @@
 
  
-class SkipList
+class DSkipList
   attr_accessor :level
   attr_accessor :header
 
@@ -100,6 +100,7 @@ class SkipList
       end
     end
   end
+  alias_method :[]=, :insert
 
   def to_a(l = 0)
     x = @header.forward[l]
