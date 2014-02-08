@@ -26,7 +26,11 @@ class DSkipList
    @node_nil = Node.new(1000000)
    @header.forward[0] = @node_nil
   end
-   
+
+  def clear
+    initialize(@max_level)
+  end
+
   def find_node(search_key)
     x = @header
     @level.downto(0) do |i|
