@@ -26,24 +26,26 @@ class DSkipList
    @header.forward[0] = @node_nil
   end
    
-  def search(search_key)
-    #beware! returns the next lowest if value isn't found
+  def find_node(search_key)
     x = @header
     @level.downto(0) do |i|
       while x.forward[i].key < search_key
         x = x.forward[i]
       end
     end 
-
-    _next = x.forward[0]
-
+    x = x.forward[0]
     if x.key == search_key
       return x
     else
       return nil
     end
   end
- 
+  
+  def [] key
+    node = self.find_node(key)
+    return node.value if node
+  end 
+
   def random_level
     v = 0
     while rand < @p && v < @max_level
@@ -100,7 +102,10 @@ class DSkipList
       end
     end
   end
-  alias_method :[]=, :insert
+ 
+  def []= key, value
+    self.insert(key, value)
+  end 
 
   def to_a(l = 0)
     x = @header.forward[l]

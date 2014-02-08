@@ -11,7 +11,7 @@ puts "other skip list insert time: "
 puts Benchmark.measure {1.upto(10000) {|i| otherList[i] = i}}
 
 puts "this list search time"
-puts Benchmark.measure {1.upto(10000) {|s| list.search(s)}}
+puts Benchmark.measure {1.upto(10000) {|s| list[s]}}
 
 puts "other list search time"
 puts Benchmark.measure {1.upto(10000) {|s| otherList[s]}}
@@ -27,4 +27,5 @@ def test(list)
   puts "test complete"
 end
 
-test(list)
+test(list) 
+puts "the 100th element is" + list[100].to_s
