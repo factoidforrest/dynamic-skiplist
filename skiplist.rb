@@ -3,6 +3,7 @@
 class DSkipList
   attr_accessor :level
   attr_accessor :header
+  include Enumerable
 
   class Node
     attr_accessor :key
@@ -125,4 +126,9 @@ class DSkipList
     end
      return str 
   end  
+
+  def each(&block)
+    self.to_a.each(&block)
+  end
+
 end
