@@ -37,13 +37,12 @@ class DSkipList
       @value = v.nil? ? k : v 
       @forward = []
     end
-
   end
 
   def initialize(top_level = Float::INFINITY)
    @header = Node.new(1) 
    @level = 0
-   @max_level = top_level || 3
+   @max_level = top_level
    @p = 0.5
    @node_nil = Node.new(1000000)
    @header.forward[0] = @node_nil
@@ -57,7 +56,7 @@ class DSkipList
   def find_node(search_key)
     x = @header
     @level.downto(0) do |i|
-      while x.forward[i].key < search_key
+      while x.forward[i] and x.forward[i].key < search_key
         x = x.forward[i]
       end
     end 
@@ -96,8 +95,9 @@ class DSkipList
       0.upto(x.forward.length - 1) do |i|
         update[i].forward[i] = x.forward[i] if x.forward[i]
       end
+      return true
     else
-      puts "Failed to delete non-existent node"
+      return false
     end
   end
 
@@ -106,20 +106,20 @@ class DSkipList
     update = []
     x = @header
     @level.downto(0) do |i|
-      while x.forward[i].key < search_key
+      while x.forward[i] and x.forward[i].key < search_key
         x = x.forward[i]
       end
       update[i] = x
     end   
     x = x.forward[0]
-    if x.key == search_key
+    if x and x.key == search_key
       x.value = new_value
     else
       v = random_level
       if v > @level
         (@level + 1).upto(v) do |i|
           update[i] = @header
-          @header.forward[i] = @node_nil
+          #@header.forward[i] = nil 
         end
         @level = v
       end
@@ -154,8 +154,13 @@ class DSkipList
      return str 
   end  
 
+  def to_str
+    return "SkipList level #{@max_level}"
+  end
+
   def each(&block)
     self.to_a.each(&block)
   end
 
 end
+

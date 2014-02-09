@@ -16,7 +16,8 @@ puts Benchmark.measure {1.upto(10000) {|s| list[s]}}
 puts "other list search time"
 puts Benchmark.measure {1.upto(10000) {|s| otherList[s]}}
 puts "list level " + list.level.to_s
-
+list[100000000] = "value"
+puts "large number reads" + list[100000000].to_s
 def test(list)
   complete = list.to_a
   1.upto(list.level) do |l|
@@ -26,5 +27,4 @@ def test(list)
   end
   puts "test complete"
 end
-list.clear
 test(list) 
