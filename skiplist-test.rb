@@ -2,7 +2,6 @@ require './skiplist.rb'
 require 'benchmark'
 require 'skiplist'
 list = DSkipList.new
-
 puts "this list insert time: "
 puts Benchmark.measure {1.upto(10000) {|i| list[i]=i }}
 
@@ -18,6 +17,7 @@ puts Benchmark.measure {1.upto(10000) {|s| otherList[s]}}
 puts "list level " + list.level.to_s
 list[100000000] = "value"
 puts "large number reads" + list[100000000].to_s
+
 def test(list)
   complete = list.to_a
   1.upto(list.level) do |l|
@@ -28,3 +28,8 @@ def test(list)
   puts "test complete"
 end
 test(list) 
+list.clear
+
+puts "attempting to use string as key"
+list["hello"] = "world"
+puts "the output of key hello is: " + list["hello"]

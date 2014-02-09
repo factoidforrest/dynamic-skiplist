@@ -45,7 +45,6 @@ class DSkipList
    @max_level = top_level
    @p = 0.5
    @node_nil = Node.new(1000000)
-   @header.forward[0] = @node_nil
   end
 
   def clear
@@ -61,7 +60,7 @@ class DSkipList
       end
     end 
     x = x.forward[0]
-    if x.key == search_key
+    if x and x.key == search_key
       return x
     else
       return nil
@@ -85,13 +84,13 @@ class DSkipList
     update = []
     x = @header
     @level.downto(0) do |i|
-      while x.forward[i].key < search_key
+      while x.forward[i] and x.forward[i].key < search_key
         x = x.forward[i]
       end
       update[i] = x
     end
     x = x.forward[0]
-    if x.key == search_key
+    if x and x.key == search_key
       0.upto(x.forward.length - 1) do |i|
         update[i].forward[i] = x.forward[i] if x.forward[i]
       end
