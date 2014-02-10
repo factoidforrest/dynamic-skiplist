@@ -128,41 +128,50 @@ class DSkipList
         update[i].forward[i] = x
       end
     end
+    return self
   end
  
   def []= key, value
     self.insert(key, value)
   end 
-
-  def to_a(from = nil, to = nil, limit = nil, l = 0)
+  
+  def insert_hash(hash)
+    hash.each {|key, value| self[key] = value}
+    return self
+  end
+  
+  def walk(from, to, limit, level, output)
     if from 
       x = find_node(from)
       raise 'start node not found' if !x
     else
-      x = @header.forward[l]
+      x = @header.forward[level]
     end
     if to 
       to_node = find_node(to)
       raise 'stop node not found' if !to_node
     end
-    
-    a = []
+
     if to_node or limit
       count = 0 
       while x
-        a << x.value
+        yield(x, output) 
         count += 1
         break if to_node and x == to_node 
         break if limit and count == limit 
-        x = x.forward[l]
+        x = x.forward[level]
       end
     else
       while x
-        a << x.value
-        x = x.forward[l]
+        yield(x, output)
+        x = x.forward[level]
       end
     end
-    a
+    return output
+  end
+
+  def to_a(from = nil, to = nil, limit = nil, level = 0)
+    walk(from, to, limit, level, []) {|n, arr| arr.push(n.value)}
   end
   alias_method :to_ary, :to_a
 
