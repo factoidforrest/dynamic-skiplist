@@ -100,6 +100,16 @@ class DSkipList
     end
   end
 
+  def highest
+    x = @header
+    @level.downto(0) do |i|
+      while x.forward[i]
+        x = x.forward[i]
+      end
+    end
+    return x.value
+  end
+
   def insert(search_key, new_value = nil)
     new_value = search_key if new_value.nil? 
     update = []
@@ -118,7 +128,6 @@ class DSkipList
       if v > @level
         (@level + 1).upto(v) do |i|
           update[i] = @header
-          #@header.forward[i] = nil 
         end
         @level = v
       end
@@ -134,16 +143,39 @@ class DSkipList
     self.insert(key, value)
   end 
 
-  def to_a(l = 0)
-    x = @header.forward[l]
+  def to_a(l = 0, start = nil, stop = nil, length = nil)
+    if start
+      x = find_node(start)
+      raise 'start node not found' if !x
+    else
+      x = @header.forward[l]
+    end
+    if stop
+      stop_node = find_node(stop)
+      raise 'stop node not found' if !stop_node
+    end
+    
     a = []
-    while x.forward[l]
-      a << x.value
-      x = x.forward[l]
+    if stop or length
+      while x.forward[l]
+        a << x.value
+        break if stop_node and x == stop_node 
+        break if length and a.length == length
+        x = x.forward[l]
+      end
+    else
+      while x.forward[l]
+        a << x.value
+        x = x.forward[l]
+      end
     end
     a
   end
   alias_method :to_ary, :to_a
+
+  def lowest
+    return @header.forward[0].value
+  end
 
   def to_s
     str = ""
