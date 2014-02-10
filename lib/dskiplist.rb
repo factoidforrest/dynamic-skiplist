@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 =end
  
-class DSkipList
+class SkipList
   attr_accessor :level
   attr_accessor :header
   include Enumerable
