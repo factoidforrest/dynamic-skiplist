@@ -143,23 +143,23 @@ class DSkipList
     self.insert(key, value)
   end 
 
-  def to_a(l = 0, start = nil, stop = nil, length = nil)
-    if start
-      x = find_node(start)
+  def to_a(l = 0, from = nil, to = nil, length = nil)
+    if from 
+      x = find_node(from)
       raise 'start node not found' if !x
     else
       x = @header.forward[l]
     end
-    if stop
-      stop_node = find_node(stop)
-      raise 'stop node not found' if !stop_node
+    if to 
+      to_node = find_node(to)
+      raise 'stop node not found' if !to_node
     end
     
     a = []
-    if stop or length
+    if to or length 
       while x.forward[l]
         a << x.value
-        break if stop_node and x == stop_node 
+        break if to_node and x == to_node 
         break if length and a.length == length
         x = x.forward[l]
       end
