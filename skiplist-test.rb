@@ -5,7 +5,7 @@ list = DSkipList.new
 otherList = SkipList.new 100
 hash = {}
 Benchmark.bm(30) do |b| 
-  b.report('Insert time: ') {1.upto(10000) {|i| list[i] = i}}
+  #b.report('Insert time: ') {1.upto(100000) {|i| list[i] = i}}
   #b.report('Other list insert: ') {1.upto(10000) {|i| otherList[i] = i}}
   #b.report('Search time: ') {1.upto(10000) {|i| list[i]}}
   #b.report('Other list search: ') {1.upto(10000) {|i| otherList[i]}}
@@ -16,7 +16,13 @@ Benchmark.bm(30) do |b|
   #b.report('List +10000: ') {1040000.upto(1050000) {|i| list[i] = i}}
   #b.report('Search time: ') {1000000.upto(1010000) {|i| list[i]}}
   b.report('to_a: ') {list.to_a}
+  b.report('to_h: ') {list.to_h}
 end
+hash = Hash['a'=> 1, 'b'=>2, 'c'=>3] 
+puts "the hash size is " + hash.count.to_s
+puts list.insert_hash hash
+puts list.to_s
+puts list
 puts "list size: " + list.count.to_s
 #puts "deleting 150"
 #list.delete(150)

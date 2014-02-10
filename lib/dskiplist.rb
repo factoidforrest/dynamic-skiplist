@@ -170,6 +170,10 @@ class DSkipList
     return output
   end
 
+  def to_h(from = nil, to = nil, limit = nil, level = 0)
+    walk(from, to, limit, level, {}) {|n, hash| hash[n.key] = n.value}
+  end
+
   def to_a(from = nil, to = nil, limit = nil, level = 0)
     walk(from, to, limit, level, []) {|n, arr| arr.push(n.value)}
   end
