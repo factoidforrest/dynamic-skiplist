@@ -1,33 +1,4 @@
-# Dskiplist
-
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'dskiplist'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install dskiplist
-
-## Usage
-
-
-## Contributing
-
-1. Fork it ( http://github.com/<my-github-username>/dskiplist/fork )
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
-=======
-dynamic-skiplist
-================
+# DSkipList
 
 Warning: This software is alpha.
 
@@ -48,8 +19,8 @@ But slower than Ruby's hash
                                      user     system      total        real
 List insert million elements:   23.680000   0.150000  23.830000 ( 25.223663)
 Hash insert million elements:    2.740000   0.060000   2.800000 (  2.949170)
-List search 10000                0.140000   0.000000   0.140000 (  0.169945)
-Hash search 10000                0.050000   0.000000   0.050000 (  0.104777)
+List search 10000 elements       0.140000   0.000000   0.140000 (  0.169945)
+Hash search 10000 elements       0.050000   0.000000   0.050000 (  0.104777)
 
 ```
 Ok, so why use this instead of hash? Order
@@ -83,11 +54,23 @@ Ok, so why use this instead of hash? Order
 >> list.to_a(nil, 3, nil)
 => ["duck", "goose", "quail"]
 
-
-
-
 ```
-Usage:
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'dskiplist'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install dskiplist
+
+## Usage
 ``` ruby
 require 'skiplist'
 
@@ -96,6 +79,8 @@ list = skiplist.new
 list[1] = 'dog'
 list[2] = 'cat'
 
+list[1]
+=> 'dog'
 list.to_a 
 => ['dog', 'cat']
 
@@ -110,6 +95,17 @@ list.clear
 => empty list
 
 ```
+
+## Contributing
+
+1. Fork it ( http://github.com/<my-github-username>/dskiplist/fork )
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+
+
 
 ToDo: 
 - Jruby multithreading and locking with mutexes for multi-core support.
