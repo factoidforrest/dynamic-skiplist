@@ -81,6 +81,7 @@ list[2] = 'cat'
 
 list[1]
 => 'dog'
+
 list.to_a 
 => ['dog', 'cat']
 
