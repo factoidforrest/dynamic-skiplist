@@ -38,7 +38,6 @@ end
 #test(list) 
 #list.clear
 
-puts list.to_a
 #puts "attempting to use string as key"
 #list["hello"] = "world"
 #puts "the output of key hello is: " + list["hello"]
