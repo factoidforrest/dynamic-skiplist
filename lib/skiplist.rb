@@ -100,15 +100,6 @@ class DSkipList
     end
   end
 
-  def highest
-    x = @header
-    @level.downto(0) do |i|
-      while x.forward[i]
-        x = x.forward[i]
-      end
-    end
-    return x.value
-  end
 
   def insert(search_key, new_value = nil)
     new_value = search_key if new_value.nil? 
@@ -143,7 +134,7 @@ class DSkipList
     self.insert(key, value)
   end 
 
-  def to_a(l = 0, from = nil, to = nil, limit = nil)
+  def to_a(from = nil, to = nil, limit = nil, l = 0)
     if from 
       x = find_node(from)
       raise 'start node not found' if !x
@@ -156,9 +147,9 @@ class DSkipList
     end
     
     a = []
-    if to or limit
+    if to_node or limit
       count = 0 
-      while x.forward[l]
+      while x
         a << x.value
         count += 1
         break if to_node and x == to_node 
@@ -166,7 +157,7 @@ class DSkipList
         x = x.forward[l]
       end
     else
-      while x.forward[l]
+      while x
         a << x.value
         x = x.forward[l]
       end
@@ -175,14 +166,24 @@ class DSkipList
   end
   alias_method :to_ary, :to_a
 
-  def lowest
+  def largest 
+    x = @header
+    @level.downto(0) do |i|
+      while x.forward[i]
+        x = x.forward[i]
+      end
+    end
+    return x.value
+  end
+
+  def smallest 
     return @header.forward[0].value
   end
 
   def to_s
     str = ""
     @level.downto(0) do |l|
-      str << "Level #{l}: " + to_a(l).join('-') + "\n" 
+      str << "Level #{l}: " + to_a(nil, nil, nil, l).join('-') + "\n" 
     end
      return str 
   end  
