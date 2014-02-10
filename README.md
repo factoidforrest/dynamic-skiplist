@@ -72,9 +72,9 @@ Or install it yourself as:
 
 ## Usage
 ``` ruby
-require 'skiplist'
+require 'dskiplist'
 
-list = skiplist.new
+list = DSkipList.new
 
 list[1] = 'dog'
 list[2] = 'cat'
