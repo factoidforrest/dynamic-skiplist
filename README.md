@@ -4,7 +4,7 @@ dynamic-skiplist
 Warning: This software is alpha.
 
 This is a ruby skiplist much faster than the ruby skiplist gem here https://github.com/metanest/ruby-skiplist
-Times shown are for 1000 operations
+Times shown are for 10000 operations
 ```ruby
 this list insert time: 
   0.150000
@@ -84,6 +84,6 @@ list.clear
 ```
 
 ToDo: 
-Jruby multithreading and locking with mutexes for multi-core support.
-Lazy operations
-hash to skiplist, skiplist to hash
+- Jruby multithreading and locking with mutexes for multi-core support.
+- Lazy operations
+- hash to skiplist, skiplist to hash
