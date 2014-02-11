@@ -3,15 +3,72 @@
 Warning: This software is alpha.
 
 This is a ruby skiplist much faster than the ruby skiplist gem here https://github.com/metanest/ruby-skiplist
-Times shown are for 10000 operations
+Benchmarks below
+
+
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'dskiplist'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install dskiplist
+
+## Usage
+``` ruby
+require 'dskiplist'
+
+list = DSkipList.new
+
+list[1] = 'dog'
+list[2] = 'cat'
+
+#or
+
+list.insert_hash Hash[3 => 'fish']
+
+list[1]
+=> 'dog'
+
+list.to_a 
+=> ['dog', 'cat', 'fish']
+
+list.to_h
+=> {1=>"dog", 2=>"cat", 3=>"fish"}
+
+list.each {|e| puts e.reverse}
+=> god
+=> tac
+=> shif
+
+
+list.count
+=> 3
+
+list.clear
+=> empty list
+
+
+
+```
+## Benchmarks
+Other list: https://github.com/metanest/ruby-skiplist
+
 ```ruby
-this list insert time: 
+this list insert 10000 elements time: 
   0.150000
-other skip list insert time: 
+other skip list insert 10000 elements time: 
   3.540000
-this list search time
+this list search 10000 elements time
   0.080000
-other list search time
+other list search 10000 elements time
   2.480000
 ```
 But slower than Ruby's hash
@@ -39,7 +96,7 @@ Ok, so why use this instead of hash? Order
 >> list.to_a
 => ["duck", "goose", "quail", "pidgin"]
 
-#or in a range
+#or in an inclusive range
 >> from = 1
 >> to = 3
 #0 is the base layer of the list.  It contains all elements. default 0
@@ -54,46 +111,9 @@ Ok, so why use this instead of hash? Order
 >> list.to_a(nil, 3, nil)
 => ["duck", "goose", "quail"]
 
-```
-
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'dskiplist'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install dskiplist
-
-## Usage
-``` ruby
-require 'dskiplist'
-
-list = DSkipList.new
-
-list[1] = 'dog'
-list[2] = 'cat'
-
-list[1]
-=> 'dog'
-
-list.to_a 
-=> ['dog', 'cat']
-
-list.each {|e| puts e.reverse}
-=> god
-=> tac
-
-list.count
-=> 2
-
-list.clear
-=> empty list
+#or count the elements between two elements(plus two to include the endpoints)
+>> list.count(from, to)
+=> 3
 
 ```
 
@@ -111,4 +131,3 @@ list.clear
 ToDo: 
 - Jruby multithreading and locking with mutexes for multi-core support.
 - Lazy operations
-- hash to skiplist, skiplist to hash
