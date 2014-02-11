@@ -139,7 +139,11 @@ class DSkipList
     hash.each {|key, value| self[key] = value}
     return self
   end
-  
+
+  def count(from = nil, to = nil, level = 0)
+    walk(from, to, nil, level, nil)
+  end 
+
   def walk(from, to, limit, level, output)
     if from 
       x = find_node(from)
@@ -151,8 +155,16 @@ class DSkipList
       to_node = find_node(to)
       raise 'stop node not found' if !to_node
     end
-
-    if to_node or limit
+    #if no block is given, assume we are trying to count
+    if !block_given? 
+      count = 0
+      while x
+        count += 1
+        break if to_node == x
+        x = x.forward[level]
+      end
+      return count
+    elsif to_node or limit
       count = 0 
       while x
         yield(x, output) 

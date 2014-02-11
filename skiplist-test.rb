@@ -24,6 +24,7 @@ puts list.insert_hash hash
 puts list.to_s
 puts list
 puts "list size: " + list.count.to_s
+puts list.to_a.to_s
 #puts "deleting 150"
 #list.delete(150)
 puts "list level " + list.level.to_s
