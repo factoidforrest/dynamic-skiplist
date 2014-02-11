@@ -27,6 +27,7 @@ require 'dskiplist'
 
 list = DSkipList.new
 
+#strings and symbols are also valid keys, just keep it consistent
 list[1] = 'dog'
 list[2] = 'cat'
 
