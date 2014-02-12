@@ -92,7 +92,7 @@ class DSkipList
     x = x.forward[0]
     if x and x.key == search_key
       0.upto(x.forward.length - 1) do |i|
-        update[i].forward[i] = x.forward[i] if x.forward[i]
+          update[i].forward[i] = x.forward[i]
       end
       return true
     else
@@ -163,7 +163,6 @@ class DSkipList
         break if to_node == x
         x = x.forward[level]
       end
-      puts "about to return count: #{count}"
       return count
     elsif to_node or limit
       count = 0 
