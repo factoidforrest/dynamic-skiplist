@@ -163,6 +163,7 @@ class DSkipList
         break if to_node == x
         x = x.forward[level]
       end
+      puts "about to return count: #{count}"
       return count
     elsif to_node or limit
       count = 0 
