@@ -23,7 +23,6 @@ describe "The skiplist" do
   end 
 
   it "should lookup value correctly" do
-    puts "30 returned #{@list[30]}"
     expect(@list[30]).to eq(30)
   end
 
