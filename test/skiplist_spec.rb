@@ -1,5 +1,6 @@
 require 'rspec'
-require 'dskiplist'
+require './lib/dskiplist.rb'
+require 'pry' 
 #Checks for stray links in the upper levels. There may be a more exhaustive way to check integrity. 
 def check_integrity(list)
   complete = list.to_a
@@ -12,6 +13,7 @@ def check_integrity(list)
 end
 
 describe "The skiplist" do
+  puts "test suite launching"
   before :each do
     @list = DSkipList.new
     100.times {|n| @list[n] = n}
@@ -21,6 +23,7 @@ describe "The skiplist" do
   end 
 
   it "should lookup value correctly" do
+    puts "30 returned #{@list[30]}"
     expect(@list[30]).to eq(30)
   end
 
@@ -31,14 +34,14 @@ describe "The skiplist" do
 
   it "should count correctly" do
     expect(@list.count).to eq(100)
-    expect(@list.count(50,99)).to eq(50)
-    expect(@list.count(1,1)).to eq(1)
+    expect(@list.count(50,99)).to eq(48)
+    expect(@list.count(1,1)).to eq(0)
   end
 
   it "should convert to array" do
     entire = @list.to_a
     expect(entire.count).to eq(100)
-    subset = @list.to_a(26,50)
+    subset = @list.to_a(25,50)
     expect(subset.count).to eq(25)
     26.upto(50) do |n|
       expect(subset.include? n).to eq(true)
@@ -47,9 +50,9 @@ describe "The skiplist" do
 
   it "should convert to hash" do
     expect(@list.to_h.count).to eq(100)
-    expect(@list.to_h(51,75).count).to eq(25)
+    expect(@list.to_h(50,75).count).to eq(25)
     subset = @list.to_h(25,50)
-    25.upto(50) do |n|
+    26.upto(50) do |n|
       expect(subset[n]).to eq(n)
     end 
   end
@@ -62,5 +65,7 @@ describe "The skiplist" do
   it "should delete multiple elements properly" do 
     (25..75).each {|n| @list.delete n}
     (25..75).each {|n| expect(@list[n]).to eq(nil)}
+    #check sizes of each level to make sure we aren't chopping off the tail when we delete.  Seems fine
+    #@list.level.downto(0) {|l| puts "level #{l} contains #{@list.count(nil, nil, l)}"}
   end
 end

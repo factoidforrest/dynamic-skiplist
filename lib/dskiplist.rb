@@ -51,25 +51,28 @@ class DSkipList
     initialize(@max_level)
     return self
   end
-
+  
+  #returns previous node if exact key match is not found
   def find_node(search_key)
     x = @header
     @level.downto(0) do |i|
+      #puts "on level #{i}"
       while x.forward[i] and x.forward[i].key < search_key
+        #puts "walked node #{x.key} on level #{i}"
         x = x.forward[i]
       end
     end 
-    x = x.forward[0]
-    if x and x.key == search_key
-      return x
-    else
-      return nil
-    end
+    x = x.forward[0] if x.forward[0].key == search_key
+    return x
   end
   
   def [] key
     node = self.find_node(key)
-    return node.value if node
+    if node and node.key == key
+      return node.value
+    else
+      return nil
+    end
   end 
 
   def random_level
@@ -147,29 +150,25 @@ class DSkipList
   def walk(from, to, limit, level, output)
     if from 
       x = find_node(from)
-      raise 'start node not found' if !x
+      x = x.forward[level] if x.forward[level]
     else
       x = @header.forward[level]
     end
-    if to 
-      to_node = find_node(to)
-      raise 'stop node not found' if !to_node
-    end
-    #if no block is given, assume we are trying to count
+    #if no block is given, assume we are trying to count and avoid the expensive yield below
     if !block_given? 
       count = 0
       while x
+        break if to && x.key >= to
         count += 1
-        break if to_node == x
         x = x.forward[level]
       end
       return count
-    elsif to_node or limit
+    elsif to or limit
       count = 0 
-      while x
+      while !x.nil?
         yield(x, output) 
         count += 1
-        break if to_node and x == to_node 
+        break if to and x.key >= to 
         break if limit and count == limit 
         x = x.forward[level]
       end
