@@ -1,6 +1,6 @@
 # DSkipList
 
-Warning: This software is alpha.
+Warning: This software is alpha. If you find a bug, please file the issue on github
 
 This is a ruby skiplist much faster than the ruby skiplist gem here https://github.com/metanest/ruby-skiplist
 Benchmarks below
@@ -27,6 +27,7 @@ require 'dskiplist'
 
 list = DSkipList.new
 
+#strings and symbols are also valid keys, just keep it consistent
 list[1] = 'dog'
 list[2] = 'cat'
 
