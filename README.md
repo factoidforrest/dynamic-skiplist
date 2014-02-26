@@ -97,24 +97,28 @@ Ok, so why use this instead of hash? Order
 >> list.to_a
 => ["duck", "goose", "quail", "pidgin"]
 
-#or in an inclusive range
+#or in a range
 >> from = 1
->> to = 3
+>> through = 3
 #0 is the base layer of the list.  It contains all elements. default 0
 >> layer = 0
 #limit return size if desired
 >> limit = nil
 
->> list.to_a(from, to, limit, layer)
-=> ["duck", "goose", "quail"]
->> list.to_a(2, nil, 2)
+>> list.to_a(from, through, limit, layer)
 => ["goose", "quail"]
+#note that "duck" was omitted.  The range does not include the first element.  
+#You can also use nonexistent node keys like 1.5
+
+#with a start point, no endpoint, and a limit:
+>> list.to_a(2, nil, 2)
+=> ["quail", "pidgin"]
 >> list.to_a(nil, 3, nil)
 => ["duck", "goose", "quail"]
 
-#or count the elements between two elements(plus two to include the endpoints)
->> list.count(from, to)
-=> 3
+#or count the elements between two values (+1 because endpoint is counted) from 1 to 3
+>> list.count(from, through)
+=> 2
 
 ```
 
@@ -131,4 +135,5 @@ Ok, so why use this instead of hash? Order
 
 ToDo: 
 - Jruby multithreading and locking with mutexes for multi-core support.
-- Lazy operations
+- Lazy operations.  For now you can just do them yourself by using find_node to get your start point and calling forward[0] to get the following nodes in O(1) time
+- considering making count O(1) instead of O(log n) by just keeping track of the size 
