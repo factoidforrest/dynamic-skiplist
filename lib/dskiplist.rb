@@ -145,11 +145,11 @@ class DSkipList
   end
 
   def count(from = nil, to = nil, level = 0)
-    walk(from, to, nil, level, nil)
+    each(from, to, nil, level, nil)
   end 
 
   #accepts a block which is run on each element 
-  def walk(from, to, limit, level, output)
+  def each(from=nil, to=nil, limit=nil, level=0, output=nil)
     if from 
       x = find_node(from)
       x = x.forward[level] if x.forward[level]
@@ -184,11 +184,11 @@ class DSkipList
   end
 
   def to_h(from = nil, to = nil, limit = nil, level = 0)
-    walk(from, to, limit, level, {}) {|n, hash| hash[n.key] = n.value}
+    each(from, to, limit, level, {}) {|n, hash| hash[n.key] = n.value}
   end
 
   def to_a(from = nil, to = nil, limit = nil, level = 0)
-    walk(from, to, limit, level, []) {|n, arr| arr.push(n.value)}
+    each(from, to, limit, level, []) {|n, arr| arr.push(n.value)}
   end
   alias_method :to_ary, :to_a
 
