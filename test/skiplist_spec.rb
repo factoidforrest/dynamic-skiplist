@@ -1,6 +1,9 @@
+#Be sure to run 'gem install dskiplist --development' before running 
+#require 'method_profiler'
 require 'rspec'
 require './lib/dskiplist.rb'
 require 'pry' 
+
 #Checks for stray links in the upper levels. There may be a more exhaustive way to check integrity. 
 def check_integrity(list)
   complete = list.to_a
@@ -21,6 +24,10 @@ describe "The skiplist" do
   after :each do
     check_integrity(@list)
   end 
+
+  it "sets up the observer", :time => true do
+    #@profiler = MethodProfiler.observe(@list)
+  end
 
   it "should lookup value correctly" do
     expect(@list[30]).to eq(30)
@@ -66,5 +73,15 @@ describe "The skiplist" do
     (25..75).each {|n| expect(@list[n]).to eq(nil)}
     #check sizes of each level to make sure we aren't chopping off the tail when we delete.  Seems fine
     #@list.level.downto(0) {|l| puts "level #{l} contains #{@list.count(nil, nil, l)}"}
+  end
+
+  it "should accept a block" do
+    object_count = 0 
+    @list.each { object_count +=1 } 
+    expect(object_count).to eq(100)
+  end
+ 
+  it "reports the observer", :time => true do
+    #puts @profiler.report
   end
 end

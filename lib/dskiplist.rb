@@ -36,6 +36,7 @@ class DSkipList
       @key = k 
       @value = v.nil? ? k : v 
       @forward = []
+      
     end
   end
 
@@ -65,7 +66,7 @@ class DSkipList
     x = x.forward[0] if x.forward[0].key == search_key
     return x
   end
-  
+
   def [] key
     node = self.find_node(key)
     if node and node.key == key
@@ -147,6 +148,7 @@ class DSkipList
     walk(from, to, nil, level, nil)
   end 
 
+  #accepts a block which is run on each element 
   def walk(from, to, limit, level, output)
     if from 
       x = find_node(from)
@@ -216,9 +218,9 @@ class DSkipList
     return "SkipList level #{@max_level}"
   end
 
-  def each(&block)
-    self.to_a.each(&block)
-  end
+  #def each(&block)
+  #  self.walk(nil, nil, nil, 0, nil) @block
+  #  return self
+  #end
 
 end
-
