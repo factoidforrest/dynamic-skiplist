@@ -21,7 +21,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 =end
- 
+
+require 'thread_safe'
+require "thread/pool" #should get this working instead https://github.com/meh/ruby-thread
+require 'facter'
+
 class DSkipList
   attr_accessor :level
   attr_accessor :header
@@ -35,8 +39,8 @@ class DSkipList
     def initialize(k, v = nil)
       @key = k 
       @value = v.nil? ? k : v 
-      @forward = []
-      
+      @forward = []#ThreadSafe::Array.new 
+      @mutex = Mutex.new 
     end
   end
 
@@ -45,14 +49,15 @@ class DSkipList
    @level = 0
    @max_level = top_level
    @p = 0.5
-   @node_nil = Node.new(1000000)
+   @pool = Thread.pool(Facter.processorcount.to_i) 
   end
 
+  
   def clear
     initialize(@max_level)
     return self
   end
-  
+    
   #returns previous node if exact key match is not found
   def find_node(search_key)
     x = @header
@@ -62,8 +67,8 @@ class DSkipList
         #puts "walked node #{x.key} on level #{i}"
         x = x.forward[i]
       end
-    end 
-    x = x.forward[0] if x.forward[0].key == search_key
+    end
+    x = x.forward[0] if x.forward[0] and x.forward[0].key == search_key
     return x
   end
 

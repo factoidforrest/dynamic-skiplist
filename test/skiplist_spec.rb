@@ -54,6 +54,9 @@ describe "The skiplist" do
     end
   end
 
+  it "should return nil if key not found" do
+    expect(@list[99999999989].nil?).to eq(true)
+  end
   it "should convert to hash" do
     expect(@list.to_h.count).to eq(100)
     expect(@list.to_h(50,75).count).to eq(25)
