@@ -1,8 +1,8 @@
 require './lib/dskiplist.rb'
 require 'benchmark'
-require 'skiplist'
+#require 'skiplist'
 list = DSkipList.new
-otherList = SkipList.new 100
+#otherList = SkipList.new 100
 hash = {}
 Benchmark.bm(30) do |b| 
   b.report('Insert time: ') {1.upto(10000) {|i| list[i] = i}}
@@ -18,19 +18,19 @@ Benchmark.bm(30) do |b|
   b.report('to_a: ') {list.to_a}
   b.report('to_h: ') {list.to_h}
 end
-hash = Hash['a'=> 1, 'b'=>2, 'c'=>3] 
-puts "the hash size is " + hash.count.to_s
-puts list.insert_hash hash
-puts list.to_s
-puts list
-puts "list size: " + list.count.to_s
-puts list.to_a.to_s
+#hash = Hash['a'=> 1, 'b'=>2, 'c'=>3] 
+#puts "the hash size is " + hash.count.to_s
+#puts list.insert_hash hash
+#puts list.to_s
+#puts list
+#puts "list size: " + list.count.to_s
+#puts list.to_a.to_s
 #puts "deleting 150"
 #list.delete(150)
 puts "list level " + list.level.to_s
 #list[100000000] = "the highest element"
-puts "smallest is: " + list.smallest.to_s
-puts "largest is: " + list.largest.to_s
+#puts "smallest is: " + list.smallest.to_s
+#puts "largest is: " + list.largest.to_s
 #puts "range from 100 to 110: " + list.to_a(100,110).join(',')
 def test(list)
   complete = list.to_a

@@ -21,16 +21,38 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 =end
+module Threading
+  #modify DSkipList by storing it as "base" when it includes this module
+  def self.included(base)
+    base::Node.class_eval do
+      alias_method :old_initialize, :initialize
+      def initialize(level, multi = false)
+        old_initialize(level)
+        @mutex = Mutex.new
+        @forward = ThreadSafe::Array.new
+      end
+    end
+
+    base.class_eval do
+      alias_method :old_insert, :insert
+      def insert *args 
+        #puts 'insert wrapper used'
+        old_insert *args
+      end
+    end
+  end
+end
 
 require 'thread_safe'
-require "thread/pool" #should get this working instead https://github.com/meh/ruby-thread
+require "thread/pool"
+require "thread/promise"
 require 'facter'
+#require './threading'
 
 class DSkipList
   attr_accessor :level
   attr_accessor :header
   include Enumerable
-
   class Node
     attr_accessor :key
     attr_accessor :value
@@ -39,8 +61,7 @@ class DSkipList
     def initialize(k, v = nil)
       @key = k 
       @value = v.nil? ? k : v 
-      @forward = []#ThreadSafe::Array.new 
-      @mutex = Mutex.new 
+      @forward = [] 
     end
   end
 
@@ -50,6 +71,7 @@ class DSkipList
    @max_level = top_level
    @p = 0.5
    @pool = Thread.pool(Facter.processorcount.to_i) 
+   #self.class.include Threading
   end
 
   
