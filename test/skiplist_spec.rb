@@ -16,6 +16,8 @@ def check_integrity(list)
 end
 
 describe "The skiplist" do
+  self.use_transactional_fixtures = false
+
   puts "test suite launching"
   before :each do
     @list = DSkipList.new

@@ -34,9 +34,9 @@ module Threading
     end
 
     base.class_eval do
+      @pool = Thread.pool(Facter.processorcount.to_i) 
       alias_method :old_insert, :insert
       def insert *args 
-        #puts 'insert wrapper used'
         old_insert *args
       end
     end
@@ -70,7 +70,6 @@ class DSkipList
    @level = 0
    @max_level = top_level
    @p = 0.5
-   @pool = Thread.pool(Facter.processorcount.to_i) 
    #self.class.include Threading
   end
 
