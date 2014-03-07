@@ -1,15 +1,12 @@
 # DSkipList
 
-Warning: This software is alpha. If you find a bug, please file the issue on github
+**WARNING:** This software is in alpha. Found a bug? Please [file an issue](https://github.com/light24bulbs/dynamic-skiplist/issues) on Github.
 
-This is a ruby skiplist much faster than the ruby skiplist gem here https://github.com/metanest/ruby-skiplist
-Benchmarks below
-
-
+This is a Ruby skiplist much faster than the [ruby skiplist gem](https://github.com/metanest/ruby-skiplist). Benchmarks can be found below.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add to your Gemfile:
 
     gem 'dskiplist'
 
@@ -22,6 +19,7 @@ Or install it yourself as:
     $ gem install dskiplist
 
 ## Usage
+
 ``` ruby
 require 'dskiplist'
 
@@ -59,8 +57,9 @@ list.clear
 
 
 ```
+
 ## Benchmarks
-Other list: https://github.com/metanest/ruby-skiplist
+Reference: [ruby skiplist gem](https://github.com/metanest/ruby-skiplist)
 
 ```ruby
 this list insert 10000 elements time: 
@@ -81,7 +80,8 @@ List search 10000 elements       0.140000   0.000000   0.140000 (  0.169945)
 Hash search 10000 elements       0.050000   0.000000   0.050000 (  0.104777)
 
 ```
-Ok, so why use this instead of hash? Order
+
+Ok, so why use this instead of Hash? Order.
 ```ruby
 >> list[1] = "duck"
 >> list [2] = "goose"
@@ -124,16 +124,13 @@ Ok, so why use this instead of hash? Order
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/dskiplist/fork )
+1. [Fork it](https://github.com/light24bulbs/dynamic-skiplist/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-
-
-
-ToDo: 
-- Jruby multithreading and locking with mutexes for multi-core support.
-- Lazy operations.  For now you can just do them yourself by using find_node to get your start point and calling forward[0] to get the following nodes in O(1) time
-- considering making count O(1) instead of O(log n) by just keeping track of the size 
+## TODO
+- [ ] Jruby multithreading and locking with mutexes for multi-core support.
+- [ ] Lazy operations.  For now you can just do them yourself by using find_node to get your start point and calling forward[0] to get the following nodes in O(1) time.
+- [ ] Consider making count O(1) instead of O(log n) by just keeping track of the size.
