@@ -9,7 +9,8 @@ def check_integrity(list)
   complete = list.to_a
   1.upto(list.level) do |l|
     #if anything in the higher layer wasn't in layer 0
-    difference = list.to_a(nil,nil,nil,l) - complete
+    layer = list.to_a(nil,nil,nil,l)
+    difference = (layer - complete)
     puts "stray node found in level: #{l} which is #{list.to_a(nil,nil,nil,l)}" if !difference.empty? 
     expect(difference).to match_array([])
   end
@@ -19,7 +20,7 @@ describe "The skiplist" do
 
   puts "test suite launching"
   before :each do
-    @list = DSkipList.new
+    @list = DSkipList.new(nil, false)
     100.times {|n| @list[n] = n}
   end
   after :each do

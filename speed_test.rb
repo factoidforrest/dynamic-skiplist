@@ -5,13 +5,13 @@ list = DSkipList.new
 #otherList = SkipList.new 100
 hash = {}
 Benchmark.bm(30) do |b| 
-  b.report('Insert time: ') {1.upto(10000) {|i| list[i] = i}}
+  b.report('Insert time: ') {1.upto(1000000) {|i| list[i] = i}}
   #b.report('Other list insert: ') {1.upto(10000) {|i| otherList[i] = i}}
-  b.report('Search time: ') {1.upto(10000) {|i| list[i]}}
+  b.report('Search time: ') {1.upto(1000000) {|i| list[i]}}
   #b.report('Other list search: ') {1.upto(10000) {|i| otherList[i]}}
   #b.report('List insert million elements: ') {10000.upto(1010000) {|i| list[i] = i}}
   #b.report('Hash insert million elements: ') {1.upto(1000000) {|i| hash[i] = i}}
-  b.report('List search 10000') {1.upto(10000) {|i| list[i]}}
+  #b.report('List search 10000') {1.upto(10000) {|i| list[i]}}
   #b.report('Hash search 10000') {900000.upto(1000000) {|i| hash[i]}}
   #b.report('List +10000: ') {1040000.upto(1050000) {|i| list[i] = i}}
   #b.report('Search time: ') {1000000.upto(1010000) {|i| list[i]}}

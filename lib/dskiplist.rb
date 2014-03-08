@@ -21,33 +21,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 =end
-module Threading
-  #modify DSkipList by storing it as "base" when it includes this module
-  def self.included(base)
-    base::Node.class_eval do
-      alias_method :old_initialize, :initialize
-      def initialize(level, multi = false)
-        old_initialize(level)
-        @mutex = Mutex.new
-        @forward = ThreadSafe::Array.new
-      end
-    end
-
-    base.class_eval do
-      @pool = Thread.pool(Facter.processorcount.to_i) 
-      alias_method :old_insert, :insert
-      def insert *args 
-        old_insert *args
-      end
-    end
-  end
-end
 
 require 'thread_safe'
 require "thread/pool"
 require "thread/promise"
 require 'facter'
-#require './threading'
+require './lib/dskiplist/threading'
 
 class DSkipList
   attr_accessor :level
@@ -65,12 +44,12 @@ class DSkipList
     end
   end
 
-  def initialize(top_level = Float::INFINITY)
+  def initialize(top_level=Float::INFINITY, threadsafe=false)
    @header = Node.new(1) 
    @level = 0
    @max_level = top_level
    @p = 0.5
-   #self.class.include Threading
+   self.class.include Threading if threadsafe
   end
 
   
