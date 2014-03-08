@@ -27,7 +27,7 @@ require 'dskiplist'
 
 list = DSkipList.new
 
-#strings and symbols are also valid keys, just keep it consistent
+#anything comparable is a valid key, just keep the type consistent. Any value is valid
 list[1] = 'dog'
 list[2] = 'cat'
 
