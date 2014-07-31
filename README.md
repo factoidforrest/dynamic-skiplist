@@ -1,7 +1,7 @@
 # DSkipList
 
 #What is a skiplist?
-A skiplist is a lot link a linked list, where every node holds the next node.  In a skiplist, some of the nodes are connected to more distant nodes.  This allows you to jump quickly through ordered nodes, acheiving O(log (n)) or better performance for any operation.
+A skiplist is similar to a linked list, where every node holds the next node.  In a skiplist, some of the nodes are connected to more distant nodes.  This allows you to jump quickly through ordered nodes, acheiving O(log (n)) or better performance for any operation.
 
 Warning: This software is alpha. If you find a bug, please file the issue on github.  Master contains incremental changes and may be broken, but the [gem](http://rubygems.org/gems/dskiplist) is usably stable.
 
