@@ -212,10 +212,6 @@ class DSkipList
      return str 
   end  
 
-  def to_str
-    return "SkipList level #{@max_level}"
-  end
-
   def each(&block)
     self.to_a.each(&block)
   end
